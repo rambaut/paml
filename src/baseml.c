@@ -188,7 +188,7 @@ int main (int argc, char *argv[])
    /* for stepwise addition, com.sspace should be calculated using com.ns. */
    com.sspace = 1000000 * sizeof(double);
    if ((com.space = (double*)malloc(com.sspace)) == NULL)
-      error2("oom space");
+      error2("out of memory: space");
 
    if (com.clock == 5 || com.clock == 6)
       DatingHeteroData(fout);
@@ -227,7 +227,7 @@ int main (int argc, char *argv[])
       if (com.fix_blength == 3) {
          printf("\nRelative branch lengths in tree fixed; estimating a scale factor.\n");
          if ((com.blengths0 = (double*)malloc((com.ns * 2 - 2) * sizeof(double))) == NULL)
-            error2("oom blengths0");
+            error2("out of memory: blengths0");
       }
 
       SetMapAmbiguity(com.seqtype, 0);
@@ -237,7 +237,7 @@ int main (int argc, char *argv[])
       if (com.rho && com.readpattern) error2("rho doesn't work with readpattern.");
       if (com.ndata == 1) fclose(fseq);
       k = (com.ns * 2 - 1) * sizeof(struct TREEN);
-      if ((nodes = (struct TREEN*)malloc(k)) == NULL) error2("oom");
+      if ((nodes = (struct TREEN*)malloc(k)) == NULL) error2("out of memory");
       gnodes[0] = nodes;
 
       if (com.coding) {
@@ -280,7 +280,7 @@ int main (int argc, char *argv[])
          i = com.ns*(com.ns - 1) / 2;
          SeqDistance = (double*)realloc(SeqDistance, i * sizeof(double));
          ancestor = (int*)realloc(ancestor, i * sizeof(int));
-         if (SeqDistance == NULL || ancestor == NULL) error2("oom distance&ancestor");
+         if (SeqDistance == NULL || ancestor == NULL) error2("out of memory: distance&ancestor");
       }
       InitializeBaseAA(fout);
 
@@ -310,10 +310,10 @@ int main (int argc, char *argv[])
       }
       com.sconP = (com.ns - 1)*com.ncode*(size_t)com.npatt * sizeof(double);
       if ((com.conP = (double*)realloc(com.conP, com.sconP)) == NULL)
-         error2("oom conP");
+         error2("out of memory: conP");
       if (com.alpha || com.nparK) {
          s2 = com.npatt*com.ncatG * sizeof(double);
-         if ((com.fhK = (double*)realloc(com.fhK, s2)) == NULL) error2("oom");
+         if ((com.fhK = (double*)realloc(com.fhK, s2)) == NULL) error2("out of memory");
       }
 
       printf("\n%9zu bytes for distance ", com.ns*(com.ns - 1) / 2 * (sizeof(double) + sizeof(int)));
@@ -504,7 +504,7 @@ int Forestry(FILE *fout, FILE *ftree)
       if (com.sspace < spaceming2(np)) {
          com.sspace = spaceming2(np);
          if ((com.space = (double*)realloc(com.space, com.sspace)) == NULL)
-            error2("oom space");
+            error2("out of memory: space");
       }
 
       if (itree && !finitials && (com.nhomo == 0 || com.nhomo == 2))
@@ -572,7 +572,7 @@ int Forestry(FILE *fout, FILE *ftree)
          if (com.sspace < np*(np + 1) * sizeof(double)) {
             com.sspace = np*(np + 1) * sizeof(double);
             if ((com.space = (double*)realloc(com.space, com.sspace)) == NULL)
-               error2("oom space for SE");
+               error2("out of memory: space for SE");
          }
 
          g = com.space;
@@ -1181,7 +1181,7 @@ int GetInitials(double x[], int *fromfile)
          com.sconP = sconP_new;
          printf("\n%9zu bytes for conP, adjusted\n", com.sconP);
          if ((com.conP = (double*)realloc(com.conP, com.sconP)) == NULL)
-            error2("oom conP");
+            error2("out of memory: conP");
       }
    }
    InitializeNodeScale();
@@ -1674,7 +1674,7 @@ int TestModel(FILE *fout, double x[], int nsep, double space[])
    double *pexp = space, *nobs, lmax0, lnL0, X2, ef, de;
 
    SiteCat = (int*)malloc((1 << 2 * com.ns) * sizeof(int));
-   if (SiteCat == NULL)  error2("oom");
+   if (SiteCat == NULL)  error2("out of memory");
    CollapsSite(F0, nsep, com.ns, &ncat, SiteCat);
    fprintf(fout, "\n\nAppr. test of model.. ncat%6d  nsep%6d\n", ncat, nsep);
 
